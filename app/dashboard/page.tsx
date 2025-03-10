@@ -23,7 +23,6 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // Fetch data in parallel
         const [timeSlots, proposals, contracts] = await Promise.all([getTimeSlots(), getProposals(), getContracts()])
 
         // Calculate dashboard metrics
