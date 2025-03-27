@@ -10,7 +10,6 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
   title: "Sistema Plantão Médico",
   description: "Conectando médicos e oportunidades de plantão",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -32,6 +31,3 @@ export default function RootLayout({
   )
 }
 
-
-
-import './globals.css'

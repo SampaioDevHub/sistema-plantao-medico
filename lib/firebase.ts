@@ -5,13 +5,14 @@ import { getStorage } from "firebase/storage"
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-}
+  apiKey: "AIzaSyBMzel8YJ9l9puiOIHvKOKR7A1tGTGZB9M",
+  authDomain: "clinic-b51d7.firebaseapp.com",
+  projectId: "clinic-b51d7",
+  storageBucket: "clinic-b51d7.firebasestorage.app",
+  messagingSenderId: "735856020061",
+  appId: "1:735856020061:web:baf1218873a185d4dc5bb4",
+  measurementId: "G-FT4RYZCRH4"
+};
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
