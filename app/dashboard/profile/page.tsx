@@ -729,7 +729,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle>Documentos</CardTitle>
-              <CardDescription>Envie os documentos necessários para o cadastro HAPVIDA</CardDescription>
+              <CardDescription>Envie os documentos necessários para o cadastro FHT</CardDescription>
             </CardHeader>
             <CardContent>
               <Stepper
