@@ -112,7 +112,7 @@ export default function RegisterPage() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="hospital" id="hospital" />
-                    <Label htmlFor="hospital">Hospital</Label>
+                    <Label htmlFor="hospital">Empresa</Label>
                   </div>
                 </RadioGroup>
               </div>
