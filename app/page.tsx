@@ -56,7 +56,7 @@ export default function Home() {
             </div>
             <div className="md:w-1/2 mt-8 md:mt-0">
               <Image 
-                src="/images/hero-image.jpg" // Substitua por uma imagem real relacionada à clínica
+                src="https://res.cloudinary.com/dm8vb9gkj/image/upload/v1743168879/medical-banner-with-doctor-working-laptop_xwmwbo.jpg" // Substitua por uma imagem real relacionada à clínica
                 alt="Médico em ação"
                 width={500}
                 height={300}
