@@ -37,20 +37,19 @@ export default function AvailabilityPage() {
   useEffect(() => {
     const fetchTimeSlots = async () => {
       try {
-        const slots = await getTimeSlots()
-        setTimeSlots(slots.sort((a, b) => a.date.getTime() - b.date.getTime()))
+        const slots = await getTimeSlots();
+        setTimeSlots(slots.sort((a, b) => a.date.getTime() - b.date.getTime()));
       } catch (error) {
-        console.error("Error fetching time slots:", error)
+        console.error("Error fetching time slots:", error);
         toast({
           title: "Erro ao carregar",
           description: "Não foi possível carregar sua disponibilidade.",
           variant: "destructive",
-        })
+        });
       } finally {
-        setIsLoadingTimeSlots(false)
+        setIsLoadingTimeSlots(false);
       }
-    }
-
+    };
     fetchTimeSlots()
   }, [toast])
 
@@ -67,84 +66,30 @@ export default function AvailabilityPage() {
     })
   }
 
-  const handleAddTimeSlot = async () => {
+  const handleSelectDate = (newDate: Date) => {
     if (dates.length === 0) {
-      toast({
-        title: "Data necessária",
-        description: "Selecione pelo menos uma data.",
-        variant: "destructive",
-      })
-      return
-    }
-
-    if (startTime >= endTime) {
-      setTimeError("O início deve ser anterior ao término.")
-      return
-    }
-
-    if (selectedSpecialties.length === 0) {
-      toast({
-        title: "Especialidades necessárias",
-        description: "Selecione ao menos uma especialidade.",
-        variant: "destructive",
-      })
-      return
-    }
-
-    setIsLoading(true)
-
-    try {
-      for (const date of dates) {
-        if (checkTimeConflict(date, startTime, endTime)) {
-          toast({
-            title: "Conflito de horário",
-            description: `Já existe uma disponibilidade em ${date.toLocaleDateString("pt-BR")} nesse horário.`,
-            variant: "destructive",
-          })
-          continue
+      // Se nenhuma data estiver selecionada, adiciona a primeira data
+      setDates([newDate])
+    } else if (dates.length === 1) {
+      // Se já houver uma data selecionada, assume que é a data inicial e seleciona todas no intervalo
+      const startDate = dates[0]
+      const endDate = newDate
+  
+      if (startDate.getTime() > endDate.getTime()) {
+        // Garante que a data inicial seja antes da final
+        setDates([endDate, startDate])
+      } else {
+        const range = []
+        let currentDate = new Date(startDate)
+        while (currentDate <= endDate) {
+          range.push(new Date(currentDate))
+          currentDate.setDate(currentDate.getDate() + 1)
         }
-
-        const newSlotId = await addTimeSlot({
-          date: new Date(date),
-          startTime,
-          endTime,
-          specialties: selectedSpecialties,
-        })
-
-        setTimeSlots((prev) =>
-          [
-            ...prev,
-            {
-              id: newSlotId,
-              doctorId: "",
-              date: new Date(date),
-              startTime,
-              endTime,
-              specialties: selectedSpecialties,
-            },
-          ].sort((a, b) => a.date.getTime() - b.date.getTime())
-        )
+        setDates(range)
       }
-
-      setDates([])
-      setStartTime("08:00")
-      setEndTime("18:00")
-      setSelectedSpecialties([])
-      setTimeError(null)
-
-      toast({
-        title: "Disponibilidade adicionada",
-        description: `${dates.length} horário(s) registrado(s) com sucesso.`,
-      })
-    } catch (error) {
-      console.error("Error adding time slot:", error)
-      toast({
-        title: "Erro ao adicionar",
-        description: "Falha ao adicionar disponibilidade.",
-        variant: "destructive",
-      })
-    } finally {
-      setIsLoading(false)
+    } else {
+      // Se já houver um intervalo selecionado, redefinir para começar de novo
+      setDates([newDate])
     }
   }
 
@@ -384,7 +329,6 @@ export default function AvailabilityPage() {
               <Button
                 type="button"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2 text-sm sm:text-base"
-                onClick={handleAddTimeSlot}
                 disabled={isLoading || !!timeError}
               >
                 {isLoading ? (

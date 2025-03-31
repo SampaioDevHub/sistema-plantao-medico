@@ -18,6 +18,8 @@ export interface UserData {
   userType: UserType
   createdAt: Date
   updatedAt: Date
+  crm?: string // Opcional para médicos
+  cnpj?: string // Opcional para empresas
 }
 
 // Register a new user
@@ -26,6 +28,7 @@ export const registerUser = async (
   password: string,
   name: string,
   userType: UserType,
+  additionalData: { crm?: string; cnpj?: string } = {} // Dados adicionais opcionais
 ): Promise<UserData> => {
   try {
     // Create user in Firebase Auth
@@ -43,6 +46,8 @@ export const registerUser = async (
       userType,
       createdAt: new Date(),
       updatedAt: new Date(),
+      ...(additionalData.crm && { crm: additionalData.crm }), // Adiciona CRM se presente
+      ...(additionalData.cnpj && { cnpj: additionalData.cnpj }), // Adiciona CNPJ se presente
     }
 
     await setDoc(doc(db, "users", user.uid), {
@@ -106,4 +111,3 @@ export const getCurrentUserData = async (): Promise<UserData | null> => {
     throw error
   }
 }
-
